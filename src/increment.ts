@@ -1,5 +1,5 @@
 /** Increments a value with vanilla JS as to skip Reacts lifecycle */
-export function increment(elementId) {
+export function increment(elementId: string) {
   const el = document.getElementById(elementId);
   if (el != null) {
     const currentCount = parseInt(el.innerText);
