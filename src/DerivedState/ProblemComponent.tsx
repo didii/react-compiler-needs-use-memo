@@ -9,8 +9,9 @@ const functionId = randomString();
 export default function ProblemComponent({ ...props }: HTMLAttributes<HTMLDivElement>) {
   const [count1, setCount1] = useState(1);
   const [count2, setCount2] = useState(1);
+  const [baseArray, _] = useState(["foo", "bar", "string", "dodoo", "loo", "fabroo"]);
 
-  const computed = ["foo", "bar", "string", "dodoo", "loo", "fabroo"].slice(0, count2);
+  const computed = baseArray.slice(0, count2);
 
   function filter() {
     increment(functionId);

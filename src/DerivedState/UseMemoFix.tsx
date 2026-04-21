@@ -9,8 +9,9 @@ const functionId = randomString();
 export default function UseMemoFix({ ...props }: HTMLAttributes<HTMLDivElement>) {
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
+  const [baseArray, _] = useState(["foo", "bar", "string", "dodoo", "loo", "fabroo"]);
 
-  const computed = useMemo(() => ["foo", "bar", "string", "dodoo", "loo", "fabroo"].slice(0, count2 + 1), [count2]);
+  const computed = useMemo(() => baseArray.slice(0, count2 + 1), [baseArray, count2]);
 
   function filter() {
     increment(functionId);
