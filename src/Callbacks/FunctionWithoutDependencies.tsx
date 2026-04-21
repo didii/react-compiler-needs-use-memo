@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useState, type HTMLAttributes } from 'react';
+import { useLayoutEffect, useState, type HTMLAttributes } from 'react';
 import { increment } from '../increment';
 import { randomString } from '../randomString';
 
@@ -6,13 +6,13 @@ const functionId = randomString();
 const filteredId = randomString();
 const renderId = randomString();
 
-export function UseCallback({ ...props }: HTMLAttributes<HTMLDivElement>) {
+export function FunctionWithoutDependencies({ ...props }: HTMLAttributes<HTMLDivElement>) {
   const [baseArray, _] = useState(['foo', 'bar', 'string', 'dodoo', 'loo', 'fabroo']);
   const [input, setInput] = useState('');
 
-  const filter = useCallback((array: string[], input: string) => {
-    return array.filter(s => s.includes(input));
-  }, []);
+  const filter = (baseArray: string[], input: string) => {
+    return baseArray.filter(s => s.includes(input));
+  };
 
   const filtered = filter(baseArray, input);
 
@@ -28,7 +28,15 @@ export function UseCallback({ ...props }: HTMLAttributes<HTMLDivElement>) {
 
   return (
     <div {...props}>
-      <h3 style={{ marginTop: 0 }}>With useCallback ✅</h3>
+      <h3 style={{ marginTop: 0 }}>Function without dependencies ✅</h3>
+      <p>
+        <b>Expected behavior</b>: typing in the input will only update <code>filtered</code> and <code>filter</code> is
+        a stable function.
+      </p>
+      <p>
+        <b>Observed behavior</b>: the <code>filter</code> function is stable (which is not the case without the
+        compiler), but <code>filtered</code> ch
+      </p>
       <input value={input} onChange={ev => setInput(ev.target.value)} />
       <pre>{JSON.stringify(filtered)}</pre>
       <div>

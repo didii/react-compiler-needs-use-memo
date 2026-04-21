@@ -6,11 +6,15 @@ const functionId = randomString();
 const filteredId = randomString();
 const renderId = randomString();
 
-export function OutsideReact({ ...props }: HTMLAttributes<HTMLDivElement>) {
+export function FunctionWithArrayDependency({ ...props }: HTMLAttributes<HTMLDivElement>) {
   const [baseArray, _] = useState(['foo', 'bar', 'string', 'dodoo', 'loo', 'fabroo']);
   const [input, setInput] = useState('');
 
-  const filtered = filter(baseArray, input);
+  const filter = (input: string) => {
+    return baseArray.filter(s => s.includes(input));
+  };
+
+  const filtered = filter(input);
 
   useLayoutEffect(() => {
     increment(functionId);
@@ -24,8 +28,15 @@ export function OutsideReact({ ...props }: HTMLAttributes<HTMLDivElement>) {
 
   return (
     <div {...props}>
-      <h3 style={{ marginTop: 0 }}>Outside React ✅</h3>
-      <p>Moving the function outside of React will make it stable.</p>
+      <h3 style={{ marginTop: 0 }}>Function with dependency on array ✅</h3>
+      <p>
+        <b>Expected behavior</b>: typing in the input will only update <code>filtered</code> and <code>filter</code> is
+        a stable function.
+      </p>
+      <p>
+        <b>Observed behavior</b>: the <code>filter</code> function is stable (which is not the case without the
+        compiler), but <code>filtered</code> ch
+      </p>
       <input value={input} onChange={ev => setInput(ev.target.value)} />
       <pre>{JSON.stringify(filtered)}</pre>
       <div>
@@ -39,8 +50,4 @@ export function OutsideReact({ ...props }: HTMLAttributes<HTMLDivElement>) {
       </div>
     </div>
   );
-}
-
-function filter(array: string[], input: string) {
-  return array.filter(s => s.includes(input));
 }
