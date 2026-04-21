@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState, type HTMLAttributes } from 'react';
 import { increment } from '../increment';
 import { randomString } from '../randomString';
+import { VarView } from './VarView';
 
 const renderId = randomString();
 const computedId = randomString();
@@ -40,15 +41,13 @@ export default function ProblemComponent({ ...props }: HTMLAttributes<HTMLDivEle
         <br />
         <code>count2 = {count2}</code>
       </button>
-      <pre>computed = {JSON.stringify(computed)}</pre>
-      <pre>filtered = {JSON.stringify(filter(computed))}</pre>
-      <div>
-        Times <code>computed</code> changed: <span id={computedId}>0</span>
-        <br />
-        Times <code>filter()</code> called: <span id={functionId}>0</span>
-        <br />
-        Times rerendered: <span id={renderId}>0</span>
-      </div>
+      <VarView
+        computed={computed}
+        filtered={filter(computed)}
+        computedId={computedId}
+        functionId={functionId}
+        renderId={renderId}
+      />
     </div>
   );
 }

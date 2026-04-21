@@ -1,6 +1,7 @@
 import { useLayoutEffect, useMemo, useState, type HTMLAttributes } from 'react';
 import { increment } from '../increment';
 import { randomString } from '../randomString';
+import { VarView } from './VarView';
 
 const renderId = randomString();
 const computedId = randomString();
@@ -39,15 +40,13 @@ export default function UseMemoFix({ ...props }: HTMLAttributes<HTMLDivElement>)
         <br />
         <code>count2 = {count2}</code>
       </button>
-      <pre>computed = {JSON.stringify(computed)}</pre>
-      <pre>filtered = {JSON.stringify(filtered)}</pre>
-      <div>
-        Times <code>computed</code> changed: <span id={computedId}>0</span>
-        <br />
-        Times called <code>filter()</code>: <span id={functionId}>0</span>
-        <br />
-        Times rerendered: <span id={renderId}>0</span>
-      </div>
+      <VarView
+        computed={computed}
+        filtered={filtered}
+        computedId={computedId}
+        functionId={functionId}
+        renderId={renderId}
+      />
     </div>
   );
 }
