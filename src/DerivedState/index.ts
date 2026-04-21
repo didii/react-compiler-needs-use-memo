@@ -1,1 +1,1 @@
-export * from "./DerivedState";
+export * from './DerivedState';

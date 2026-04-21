@@ -1,6 +1,6 @@
-import { useLayoutEffect, useState, type HTMLAttributes } from "react";
-import { increment } from "../increment";
-import { randomString } from "../randomString";
+import { useLayoutEffect, useState, type HTMLAttributes } from 'react';
+import { increment } from '../increment';
+import { randomString } from '../randomString';
 
 const renderId = randomString();
 const computedId = randomString();
@@ -9,16 +9,9 @@ const functionId = randomString();
 export default function ProblemComponent({ ...props }: HTMLAttributes<HTMLDivElement>) {
   const [count1, setCount1] = useState(1);
   const [count2, setCount2] = useState(1);
-  const [baseArray, _] = useState(["foo", "bar", "string", "dodoo", "loo", "fabroo"]);
+  const [baseArray, _] = useState(['foo', 'bar', 'string', 'dodoo', 'loo', 'fabroo']);
 
   const computed = baseArray.slice(0, count2);
-
-  function filter() {
-    increment(functionId);
-    return computed.filter((f) => f.includes("oo"));
-  }
-
-  const filtered = filter();
 
   useLayoutEffect(() => {
     increment(computedId);
@@ -34,21 +27,21 @@ export default function ProblemComponent({ ...props }: HTMLAttributes<HTMLDivEle
         <b>Expected behavior</b>: updating unrelated state <code>count1</code> will only rerender the component.
       </p>
       <p>
-        <b>Observed behavior</b>: updating unrelated state <code>count1</code> also re-evaluates <code>computed</code>{" "}
+        <b>Observed behavior</b>: updating unrelated state <code>count1</code> also re-evaluates <code>computed</code>{' '}
         state as well as executing the <code>filter()</code> function.
       </p>
-      <button onClick={() => setCount1((count) => count + 1)}>
+      <button onClick={() => setCount1(count => count + 1)}>
         Unrelated state
         <br />
         <code>count1 = {count1}</code>
       </button>
-      <button onClick={() => setCount2((count) => count + 1)}>
+      <button onClick={() => setCount2(count => count + 1)}>
         Related state
         <br />
         <code>count2 = {count2}</code>
       </button>
       <pre>computed = {JSON.stringify(computed)}</pre>
-      <pre>filtered = {JSON.stringify(filtered)}</pre>
+      <pre>filtered = {JSON.stringify(filter(computed))}</pre>
       <div>
         Times <code>computed</code> changed: <span id={computedId}>0</span>
         <br />
@@ -58,4 +51,9 @@ export default function ProblemComponent({ ...props }: HTMLAttributes<HTMLDivEle
       </div>
     </div>
   );
+}
+
+function filter(array: string[]) {
+  increment(functionId);
+  return array.filter(f => f.includes('oo'));
 }

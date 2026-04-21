@@ -1,6 +1,6 @@
-import { useLayoutEffect, useState, type HTMLAttributes } from "react";
-import { increment } from "../increment";
-import { randomString } from "../randomString";
+import { useLayoutEffect, useState, type HTMLAttributes } from 'react';
+import { increment } from '../increment';
+import { randomString } from '../randomString';
 
 const renderId = randomString();
 const computedId = randomString();
@@ -9,10 +9,10 @@ const filteredId = randomString();
 export default function VariableFix({ ...props }: HTMLAttributes<HTMLDivElement>) {
   const [count1, setCount1] = useState(1);
   const [count2, setCount2] = useState(1);
-  const [baseArray, _] = useState(["foo", "bar", "string", "dodoo", "loo", "fabroo"]);
+  const [baseArray, _] = useState(['foo', 'bar', 'string', 'dodoo', 'loo', 'fabroo']);
 
   const computed = baseArray.slice(0, count2);
-  const filtered = computed.filter((f) => f.includes("oo"));
+  const filtered = computed.filter(f => f.includes('oo'));
 
   useLayoutEffect(() => {
     increment(computedId);
@@ -32,12 +32,12 @@ export default function VariableFix({ ...props }: HTMLAttributes<HTMLDivElement>
         I assume this is because now, the resulting string has become a dependency of the jsx rather than the complex
         object. Meaning we don't do any reference equations anymore.
       </p>
-      <button onClick={() => setCount1((count) => count + 1)}>
+      <button onClick={() => setCount1(count => count + 1)}>
         Unrelated state
         <br />
         <code>count1 = {count1}</code>
       </button>
-      <button onClick={() => setCount2((count) => count + 1)}>
+      <button onClick={() => setCount2(count => count + 1)}>
         Related state
         <br />
         <code>count2 = {count2}</code>

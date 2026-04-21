@@ -3,6 +3,6 @@ export function increment(elementId: string) {
   const el = document.getElementById(elementId);
   if (el != null) {
     const currentCount = parseInt(el.innerText);
-    el.innerText = "" + (currentCount + 1);
+    el.innerText = '' + (currentCount + 1);
   }
 }
